@@ -15,14 +15,11 @@ find "$origen" -type f \( -iname "*.mkv" -o -iname "*.mp4" -o -iname "*.avi" \) 
     
     # Regex ESTRICTO: NxM, SxE, NxE (números 00-99 + x/X/e/E + números 00-99)
     # NO coge años (1995), resoluciones (2160p), codecs (x265)
-# Opción 1: Aritmético con ignore error (mejor)
-if [[ "$temp" =~ ^[0-9]{1,2}$ ]] && [[ "$cap" =~ ^[0-9]{1,2}$ ]] && 
-   temp_ok=$((10#$temp)) && [[ $temp_ok -ge 1 && $temp_ok -le 99 ]] &&
-   cap_ok=$((10#$cap)) && [[ $cap_ok -ge 1 && $cap_ok -le 99 ]]; then
-
+    if [[ "$nombre_archivo" =~ ([0-9]{1,2})xXeEsS ]]; then
+        # Captura grupo1=Temp, grupo2=Cap para confirmar (ambos 00-99)
         temp="${BASH_REMATCH[1]}"
         cap="${BASH_REMATCH[2]}"
-        if [[ "$temp" =~ ^[1-9][0-9]?$ ]] && [[ "$cap" =~ ^[1-9][0-9]?$ ]]; then    
+        if (( temp >= 1 && temp <= 99 && cap >= 1 && cap <= 99 )); then
             archivo_destino="$destino_series/$ruta_relativa"
             mkdir -p "$(dirname "$archivo_destino")"
             

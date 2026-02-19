@@ -41,7 +41,7 @@ if [[ "$temp" =~ ^[0-9]{1,2}$ ]] && [[ "$cap" =~ ^[0-9]{1,2}$ ]] &&
     mkdir -p "$(dirname "$archivo_destino")"
     
     if [[ ! -e "$archivo_destino" ]]; then
-        ln "$archivo_origen" "$archivo_destino"
+        #ln "$archivo_origen" "$archivo_destino"
         echo "🎥 PELÍCULA → $archivo_destino"
     else
         echo "⏭️ Peli existe: $archivo_destino"

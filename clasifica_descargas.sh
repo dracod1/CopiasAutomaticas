@@ -15,7 +15,11 @@ find "$origen" -type f \( -iname "*.mkv" -o -iname "*.mp4" -o -iname "*.avi" \) 
     
     # Regex ESTRICTO: NxM, SxE, NxE (números 00-99 + x/X/e/E + números 00-99)
     # NO coge años (1995), resoluciones (2160p), codecs (x265)
-    if [[ "$nombre_archivo" =~ ([0-9]{1,2})[xXeEsS]([0-9]{1,2}) ]]; then
+# Opción 1: Aritmético con ignore error (mejor)
+if [[ "$temp" =~ ^[0-9]{1,2}$ ]] && [[ "$cap" =~ ^[0-9]{1,2}$ ]] && 
+   temp_ok=$((10#$temp)) && [[ $temp_ok -ge 1 && $temp_ok -le 99 ]] &&
+   cap_ok=$((10#$cap)) && [[ $cap_ok -ge 1 && $cap_ok -le 99 ]]; then
+
         temp="${BASH_REMATCH[1]}"
         cap="${BASH_REMATCH[2]}"
         if [[ "$temp" =~ ^[1-9][0-9]?$ ]] && [[ "$cap" =~ ^[1-9][0-9]?$ ]]; then    

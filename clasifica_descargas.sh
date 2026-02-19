@@ -15,7 +15,7 @@ find "$origen" -type f \( -iname "*.mkv" -o -iname "*.mp4" -o -iname "*.avi" \) 
     
     # Regex ESTRICTO: NxM, SxE, NxE (números 00-99 + x/X/e/E + números 00-99)
     # NO coge años (1995), resoluciones (2160p), codecs (x265)
-    if [[ "$nombre_archivo" =~ ([0-9]{1,2})xXeEsS ]]; then
+    if [[ "$nombre_archivo" =~ ([0-9]{1,2})[xXeEsS]([0-9]{1,2}) ]]; then
         # Captura grupo1=Temp, grupo2=Cap para confirmar (ambos 00-99)
         temp="${BASH_REMATCH[1]}"
         cap="${BASH_REMATCH[2]}"
@@ -38,7 +38,7 @@ find "$origen" -type f \( -iname "*.mkv" -o -iname "*.mp4" -o -iname "*.avi" \) 
     mkdir -p "$(dirname "$archivo_destino")"
     
     if [[ ! -e "$archivo_destino" ]]; then
-        #ln "$archivo_origen" "$archivo_destino"
+        ln "$archivo_origen" "$archivo_destino"
         echo "🎥 PELÍCULA → $archivo_destino"
     else
         echo "⏭️ Peli existe: $archivo_destino"
